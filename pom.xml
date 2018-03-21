@@ -6,7 +6,7 @@
 	<groupId>com.lengolyte</groupId>
 	<artifactId>lengolytics</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<packaging>jar</packaging>
+	<packaging>war</packaging>
 
 	<name>lengolytics</name>
 	<description>Demo project for Spring Boot</description>
@@ -26,23 +26,25 @@
 	
 	<build>
        
-        <plugins>
-           plugin>
-	      <groupId>com.heroku.sdk</groupId>
-	      <artifactId>heroku-maven-plugin</artifactId>
-	      <version>1.1.1</version>
-	      <configuration>
-		  <appName>lengolytics</appName>
-		  <includeTarget>false</includeTarget>
-		  <includes>
-		      <include>${basedir}/${full-artifact-name}</include>
-		  </includes>
-		  <jdkVersion>1.8</jdkVersion>
-		  <processTypes>
-		      <web>java $JAVA_OPTS -jar ${full-artifact-name}</web>
-		  </processTypes>
-	      </configuration>
-	  </plugin>
+        <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-dependency-plugin</artifactId>
+            <executions>
+                <execution>
+                    <phase>package</phase>
+                    <goals><goal>copy</goal></goals>
+                    <configuration>
+                        <artifactItems>
+                            <artifactItem>
+                                <groupId>com.github.jsimone</groupId>
+                                <artifactId>webapp-runner</artifactId>
+                                <destFileName>webapp-runner.jar</destFileName>
+                            </artifactItem>
+                        </artifactItems>
+                    </configuration>
+                </execution>
+            </executions>
+        </plugin>
 		<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
